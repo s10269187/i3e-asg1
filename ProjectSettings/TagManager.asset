@@ -10,6 +10,7 @@ TagManager:
   - PowerDown
   - PowerUp
   - Laser
+  - Hazard
   layers:
   - Default
   - TransparentFX
