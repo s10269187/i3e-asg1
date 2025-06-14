@@ -1,8 +1,11 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerBehavior : MonoBehaviour
 {
     bool canInteract = false;
+
+
     // Stores the current coin object the player has detected
     Collectibles currentCoin = null;
     void OnInteract()
