@@ -11,6 +11,7 @@ TagManager:
   - PowerUp
   - Laser
   - Hazard
+  - Enemy
   layers:
   - Default
   - TransparentFX
