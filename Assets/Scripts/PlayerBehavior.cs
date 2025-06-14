@@ -1,13 +1,52 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerBehavior : MonoBehaviour
 {
     bool canInteract = false;
+
+    public Transform playerCamera;
+    public float interactionDistance;
+
+    public TMP_Text interactionText;
+
+
     // Stores the current coin object the player has detected
     Collectibles currentCoin = null;
+
+    PointCoin currentPointCoin = null;
+
+
+    private void Update()
+    {
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(playerCamera.position, playerCamera.forward, out hitInfo, interactionDistance))
+        {
+            if (hitInfo.transform.TryGetComponent(out currentPointCoin))
+            {
+                interactionText.gameObject.SetActive(true);
+                interactionText.text = "Press E to interact"; 
+            }
+            else
+            {
+                currentPointCoin = null;
+            }
+        }
+        else
+        {
+            interactionText.gameObject.SetActive(false); 
+            currentPointCoin = null;
+        }
+    }
     void OnInteract()
     {
         // Check if the player can interact with objects
+        if(currentPointCoin != null)
+        {
+            currentPointCoin.collect();
+            interactionText.gameObject.SetActive(false);
+        }
         if (canInteract)
         {
             // Check if the player has detected a coin or a door

@@ -5,9 +5,12 @@ public class CollectibleCollection : MonoBehaviour
 {
     public int collectible = 0;
     private int health = 100;
+    public int point = 0;
     public TextMeshProUGUI collectiblecount;
     public TextMeshProUGUI healthText;
     public Transform spawnPoint;
+    bool allCollectiblesCollect;
+    public TMP_Text pointsText;
 
     private float damageCooldown = 1f; // Cooldown time in seconds
     private float lastDamageTime = -1f; // Last time damage or healing was applied
@@ -79,6 +82,7 @@ public class CollectibleCollection : MonoBehaviour
     void UpdateCollectibleCount()
     {
         collectiblecount.text = "Collectible: " + collectible.ToString();
+        if (collectible == 5) ;
     }
 
     void UpdateHealthUI()
@@ -106,5 +110,31 @@ public class CollectibleCollection : MonoBehaviour
     public int GetCount()
     {
         return collectible;
+    }
+
+    public void UpdPoints()
+    {
+        pointsText.text = ("Points: " + point.ToString());
+    }
+
+    [SerializeField] GameObject congratsScreen;
+
+    [SerializeField] TMP_Text congratsScoreDisplay;
+
+    public void Win()
+    {
+        if(allCollectiblesCollect)
+        {
+            congratsScreen.SetActive(true);
+            Time.timeScale = 0f;
+            congratsScoreDisplay.text = ("Score: " + point);
+        }
+    }
+    public void Update()
+    {
+        if(collectible == 5)
+        {
+            allCollectiblesCollect = true;
+        }
     }
 }
