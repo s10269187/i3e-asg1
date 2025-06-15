@@ -7,6 +7,6 @@ public class WinPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        collectibleCollections.Win();
+        collectibleCollections.Win(other.gameObject);
     }
 }

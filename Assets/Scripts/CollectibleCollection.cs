@@ -14,11 +14,12 @@ public class CollectibleCollection : MonoBehaviour
 
     private float damageCooldown = 1f; // Cooldown time in seconds
     private float lastDamageTime = -1f; // Last time damage or healing was applied
-
+    AudioSource collectibleAudio;
     void Start()
     {
         UpdateCollectibleCount();
         UpdateHealthUI();
+        collectibleAudio = GetComponent<AudioSource>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -26,7 +27,7 @@ public class CollectibleCollection : MonoBehaviour
         if (other.CompareTag("Collectibles"))
         {
             collectible++;
-
+            collectibleAudio.Play();
             // Optional: disable collider + renderer immediately to prevent re-trigger
             other.GetComponent<Collider>().enabled = false;
             if (other.GetComponent<MeshRenderer>() != null)
@@ -82,7 +83,6 @@ public class CollectibleCollection : MonoBehaviour
     void UpdateCollectibleCount()
     {
         collectiblecount.text = "Collectible: " + collectible.ToString();
-        if (collectible == 5) ;
     }
 
     void UpdateHealthUI()
@@ -121,18 +121,19 @@ public class CollectibleCollection : MonoBehaviour
 
     [SerializeField] TMP_Text congratsScoreDisplay;
 
-    public void Win()
+    public void Win(GameObject other)
     {
-        if(allCollectiblesCollect)
+        if (allCollectiblesCollect && other.CompareTag("Player"))
         {
             congratsScreen.SetActive(true);
             Time.timeScale = 0f;
-            congratsScoreDisplay.text = ("Score: " + point);
+            congratsScoreDisplay.text = "Score: " + point;
         }
     }
     public void Update()
     {
-        if(collectible == 5)
+        Debug.Log(allCollectiblesCollect);
+        if (collectible == 5)
         {
             allCollectiblesCollect = true;
         }
